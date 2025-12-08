@@ -117,7 +117,7 @@
             background: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
-            min-height: 420px; /* 拉高一點容納更多文字 */
+            min-height: 420px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -314,13 +314,13 @@
 
 <script>
     const CONFIG = {
-        salary: 38000,
-        baseExpense: 28000, 
+        salary: 35000, // 修改為 35k
+        baseExpense: 28000, // 基本開銷不變，生存壓力變大
         inflation: 0.002,   
         yield: 0.015        
     };
 
-    // --- 擴充後的事件庫 ---
+    // --- 事件庫 ---
     const LEVEL_EVENTS = {
         1: [ // Survival: 生存期
             {
@@ -453,7 +453,7 @@
 
         init() {
             this.showModal("📖 序章：被困住的滾輪", 
-                "你是一名 30 歲的平凡上班族。\n\n每天面對做不完的報表、回不完的 Email。\n薪水 38,000 元，扣掉房租生活費，每個月幾乎存不到錢。\n\n你看似安穩，其實正處於危險邊緣。\n你的目標：在 60 歲前，用這份死薪水，打造出能養活你的「現金流護盾」。");
+                "你是一名 30 歲的平凡上班族。\n\n每天面對做不完的報表、回不完的 Email。\n薪水 35,000 元，扣掉房租生活費，每個月幾乎存不到錢。\n\n你看似安穩，其實正處於危險邊緣。\n你的目標：在 60 歲前，用這份死薪水，打造出能養活你的「現金流護盾」。");
             this.updateUI();
             this.nextMonth();
         }
@@ -559,10 +559,9 @@
                     this.showToast("❌ 現金不足！");
                 }
             } else if (choice.action === 'promotion') {
-                 // 升遷邏輯
                  this.state.cash -= choice.cost;
                  this.state.sanity += 10;
-                 CONFIG.salary += 3000; // 加薪
+                 CONFIG.salary += 3000; 
                  this.showToast("🎉 投資自己成功！薪水增加了！");
             } else {
                 this.state.cash -= (choice.cost || 0);
