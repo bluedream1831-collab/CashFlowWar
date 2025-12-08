@@ -2,25 +2,28 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>現金流戰記：上班族的逆襲</title>
     <style>
+        /* --- 核心樣式設定 --- */
         :root {
-            --bg-body: #1a252f;
-            --bg-console: #2c3e50;
-            --bg-panel: #34495e;
+            --bg-body: #121212;
+            --bg-console: #1e272e;
+            --bg-panel: #2c3e50;
             --text-main: #ecf0f1;
-            --accent: #f39c12;
-            --success: #27ae60;
-            --danger: #c0392b;
-            --btn-blog: #16a085;
+            --accent: #f1c40f;       /* 金黃 */
+            --btn-blog: #00b894;     /* 青綠 */
+            --success: #2ecc71;
+            --danger: #e74c3c;
         }
 
         * { box-sizing: border-box; }
 
         body {
-            font-family: '微軟正黑體', sans-serif;
+            font-family: '微軟正黑體', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-body);
+            background-image: radial-gradient(#2c3e50 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -28,97 +31,98 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; 
         }
 
         .game-console {
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
             height: 95vh;
+            max-height: 900px;
             background-color: var(--bg-console);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            border: 1px solid #465c71;
-            overflow-y: auto;
+            padding: 20px;
+            border: 1px solid #4b6584;
+            position: relative;
         }
 
-        /* 頂部導航列 */
+        /* --- 1. 頂部導航列 --- */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-shrink: 0;
         }
 
         .game-title h1 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--accent);
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         .game-title span {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #bdc3c7;
-            margin-left: 10px;
         }
 
         .blog-btn {
-            background-color: var(--btn-blog);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 8px 16px;
+            border-radius: 30px;
             font-size: 0.9rem;
             font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
-            gap: 5px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 0px #117a65;
+            gap: 6px;
         }
-        .blog-btn:hover {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #117a65;
-        }
-        .blog-btn::before { content: "📖"; }
+        .blog-btn:hover { transform: translateY(-2px); }
 
-        /* 儀表板 */
+        /* --- 2. 儀表板 --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            flex-shrink: 0;
         }
+        
         @media (max-width: 600px) {
+            .game-console { height: 100vh; border-radius: 0; padding: 10px; }
             .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-            .game-console { height: 100vh; border-radius: 0; }
+            .game-title h1 { font-size: 1.1rem; }
+            .stat-box { padding: 8px; }
         }
 
         .stat-box {
             background: var(--bg-panel);
-            padding: 8px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 12px;
             text-align: center;
-            border-left: 3px solid var(--accent);
+            border-bottom: 3px solid var(--accent);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .stat-label { font-size: 0.8rem; color: #bdc3c7; margin-bottom: 2px;}
-        .stat-val { font-size: 1.1rem; font-weight: bold; }
+        .stat-label { font-size: 0.75rem; color: #a4b0be; margin-bottom: 4px;}
+        .stat-val { font-size: 1rem; font-weight: bold; }
 
-        .progress-bg { background: #222; height: 6px; border-radius: 3px; margin-top: 5px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--success); width: 80%; transition: width 0.3s; }
+        .progress-bg { background: #1e272e; height: 6px; border-radius: 4px; margin-top: 5px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--success); width: 100%; transition: width 0.3s; }
 
-        /* 遊戲主畫面 */
+        /* --- 3. 遊戲主舞台 --- */
         .main-stage {
             flex: 1;
             background-color: #000;
-            border-radius: 10px;
+            border-radius: 15px;
             position: relative;
             background-size: cover;
             background-position: center;
@@ -126,23 +130,23 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 20px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-            border: 2px solid #555;
-            transition: background 0.5s;
+            border: 2px solid #57606f;
+            overflow-y: auto; /* 允許內容捲動 */
         }
 
         .stage-overlay {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            backdrop-filter: blur(2px);
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .bg-level1 { background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'); } 
-        .bg-level2 { background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80'); } 
-        .bg-level3 { background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80'); } 
-        .bg-level4 { background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'); } 
+        /* 根據關卡換圖 (使用免費圖庫) */
+        .bg-level1 { background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80'); } 
+        .bg-level2 { background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80'); } 
+        .bg-level3 { background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80'); } 
+        .bg-level4 { background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'); } 
 
         .npc-tag {
             display: inline-block;
@@ -150,93 +154,114 @@
             font-weight: bold;
             border: 1px solid var(--accent);
             padding: 2px 8px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.8rem;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            background: rgba(241, 196, 15, 0.1);
         }
-        .story-text { font-size: 1.1rem; line-height: 1.5; min-height: 60px; }
+        .story-text { 
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            min-height: 60px;
+            color: #fff;
+        }
 
+        /* 投資面板 */
         .invest-panel {
-            background: rgba(44, 62, 80, 0.9);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            background: rgba(44, 62, 80, 0.95);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
             border: 1px solid #7f8c8d;
         }
-        .stock-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 0.9rem;}
+        .stock-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.9rem;}
 
-        .action-grid { display: grid; gap: 10px; }
+        /* --- 4. 按鈕區 --- */
+        .action-grid { 
+            display: grid; 
+            gap: 10px; 
+            margin-top: 15px;
+            flex-shrink: 0;
+        }
         button {
-            background: var(--accent);
-            border: none;
+            background: var(--bg-panel);
+            border: 1px solid rgba(255,255,255,0.2);
             color: #fff;
             padding: 12px;
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
             text-align: left;
-            transition: filter 0.2s;
+            transition: transform 0.1s;
             position: relative;
         }
-        button:hover { filter: brightness(1.15); }
-        button span { display: block; font-size: 0.75rem; opacity: 0.8; margin-top: 2px; }
-
-        .btn-buy { background: #2980b9; text-align: center; padding: 8px; font-size: 0.9rem;}
-        .btn-sell { background: #c0392b; text-align: center; padding: 8px; font-size: 0.9rem;}
-        .btn-next { background: #7f8c8d; text-align: center; font-weight: bold; }
-
-        .footer-guide {
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: #95a5a6;
-            text-align: center;
-            padding-top: 10px;
-            border-top: 1px dashed #555;
+        button:active { transform: scale(0.98); }
+        button span { 
+            display: block; 
+            font-size: 0.75rem; 
+            color: #bdc3c7; 
+            margin-top: 2px; 
         }
-        .footer-guide b { color: var(--warning-color); }
 
+        .btn-buy { background: #2980b9; text-align: center; padding: 8px; font-weight:bold;}
+        .btn-sell { background: #c0392b; text-align: center; padding: 8px; font-weight:bold;}
+        .btn-next { 
+            background: #e67e22; 
+            text-align: center; 
+            font-weight: bold; 
+            justify-content: center; 
+            display: flex;
+            padding: 15px;
+        }
+
+        /* --- 彈窗 Modal --- */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999;
+            backdrop-filter: blur(5px);
         }
         .modal-box {
-            background: var(--bg-panel); padding: 25px; border-radius: 12px;
+            background: var(--bg-panel); padding: 25px; border-radius: 15px;
             max-width: 400px; width: 90%; text-align: center; border: 2px solid var(--accent);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            animation: popIn 0.3s ease-out;
         }
+        @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
         .toast {
-            position: fixed; bottom: 10%; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.85); padding: 8px 16px; border-radius: 20px;
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.85); padding: 8px 20px; border-radius: 30px;
             border: 1px solid var(--accent); pointer-events: none; opacity: 0; transition: opacity 0.3s;
+            color: var(--accent); font-weight: bold; z-index: 1000; font-size: 0.9rem;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
 
 <div class="game-console">
-    <!-- 頂部導航 -->
     <div class="top-bar">
         <div class="game-title">
-            <h1>現金流戰記 <span>上班族的逆襲</span></h1>
+            <h1>現金流戰記</h1>
+            <span>上班族的逆襲 v4.2</span>
         </div>
         <a href="https://vocus.cc/user/@WUCJ" target="_blank" class="blog-btn">
-            攻略與理財筆記
+            攻略筆記
         </a>
     </div>
 
-    <!-- 儀表板 -->
     <div class="dashboard-grid">
         <div class="stat-box">
-            <div class="stat-label">第 <span id="game-year">1</span> 年 <span id="game-month">1</span> 月</div>
-            <!-- 這裡改成顯示中文章節 -->
-            <div class="stat-label" id="level-name" style="color:var(--accent); font-weight:bold;">第一章：生存的縫隙</div>
+            <div class="stat-label">時間 (年/月)</div>
+            <div class="stat-val">
+                <span id="game-year">1</span> 年 <span id="game-month">1</span> 月
+            </div>
         </div>
         <div class="stat-box">
-            <div class="stat-label">💰 現金</div>
+            <div class="stat-label">💰 手上現金</div>
             <div class="stat-val" id="cash-display">$50,000</div>
         </div>
         <div class="stat-box">
-            <div class="stat-label">📈 資產</div>
+            <div class="stat-label">📈 股票資產</div>
             <div class="stat-val" id="asset-display">$0</div>
         </div>
         <div class="stat-box">
@@ -245,18 +270,22 @@
         </div>
     </div>
 
-    <!-- 遊戲主畫面 -->
     <div class="main-stage bg-level1" id="main-bg">
+        
         <div class="stage-overlay">
-            <div class="npc-tag" id="npc-tag">👨‍💼 主角內心</div>
-            <div class="story-text" id="story-text">載入中...</div>
+            <div style="display:flex; justify-content:space-between;">
+                <div class="npc-tag" id="npc-tag">System</div>
+                <div class="npc-tag" id="level-name" style="border-color:#bdc3c7; color:#bdc3c7;">第一章</div>
+            </div>
+            
+            <div class="story-text" id="story-text">系統初始化中...</div>
 
-            <div class="invest-panel" id="invest-panel" style="display: none; margin-top: 10px;">
+            <div class="invest-panel" id="invest-panel" style="display: none;">
                 <div class="stock-row">
                     <span><b>00878</b> (持有: <span id="qty-878">0</span>)</span>
                     <span>現價: <b id="price-878" style="color:#f39c12">$15.00</b></span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <button class="btn-buy" onclick="game.trade('00878', 1)">買入 (-$<span id="cost-878">15000</span>)</button>
                     <button class="btn-sell" onclick="game.trade('00878', -1)">賣出</button>
                 </div>
@@ -266,33 +295,27 @@
         <div class="action-grid" id="action-area"></div>
     </div>
 
-    <!-- 底部攻略 -->
-    <div class="footer-guide">
-        💡 <b>生存提示：</b>精神值 < 30 會崩潰破產｜優先存 10 萬預備金｜小心訂閱制陷阱
-        <br>
-        <a href="https://vocus.cc/user/@WUCJ" target="_blank" style="color:#16a085; text-decoration:none;">
-            [閱讀完整攻略：WUCJ 理財筆記]
-        </a>
-    </div>
 </div>
 
 <div class="toast" id="toast">提示訊息</div>
 
-<!-- 彈窗 -->
 <div class="modal" id="modal">
     <div class="modal-box">
-        <h2 id="modal-title" style="color:var(--accent);">標題</h2>
-        <p id="modal-desc" style="line-height: 1.6; color: #ddd;">內容</p>
+        <h2 id="modal-title" style="color:var(--accent); margin-top:0;">標題</h2>
+        <p id="modal-desc" style="line-height: 1.6; color: #ecf0f1; margin-bottom: 20px;">內容</p>
+        
         <div id="modal-blog-btn" style="display:none; margin: 15px 0;">
             <a href="https://vocus.cc/user/@WUCJ" target="_blank" class="blog-btn" style="justify-content:center; background:#e67e22;">
                 👉 點此閱讀：翻身攻略
             </a>
         </div>
-        <button onclick="game.closeModal()" id="modal-action-btn" class="btn-next" style="width:100%;">繼續</button>
+
+        <button id="modal-action-btn" class="btn-next" style="width:100%;">繼續</button>
     </div>
 </div>
 
 <script>
+    /* --- 核心資料 --- */
     const CONFIG = {
         salary: 35000, 
         baseExpense: 28000, 
@@ -300,6 +323,7 @@
         yield: 0.015        
     };
 
+    /* --- 事件資料庫 --- */
     const LEVEL_EVENTS = {
         1: [
             {
@@ -318,14 +342,6 @@
                 ]
             },
             {
-                npc: "☁️ 雲端空間",
-                text: "手機跳出「儲存空間不足」，照片都沒備份。要訂閱雲端空間嗎？",
-                choices: [
-                    { text: "訂閱 2TB 方案", sub: "月支出 +$300 / 精神 +5", action: 'monthly_sub', cost: 300, sanity: 5 },
-                    { text: "勤勞點手動備份到電腦", sub: "麻煩 / 精神 -5", cost: 0, sanity: -5 }
-                ]
-            },
-            {
                 npc: "☕ 隔壁同事",
                 text: "「欸！今天星期五，要不要訂那家超貴的星冰樂？一杯 150 喔！不喝沒話題啦～」",
                 choices: [
@@ -334,39 +350,23 @@
                 ]
             },
             {
-                npc: "🎧 3C 災難",
-                text: "你發現藍牙耳機少了一隻...找遍全身都沒有，心態崩了。",
-                choices: [
-                    { text: "買新的 Airpods Pro", sub: "金錢 -$7,500 / 精神 +20", cost: 7500, sanity: 20 },
-                    { text: "改用路邊攤有線耳機", sub: "金錢 -$300 / 精神 -10", cost: 300, sanity: -10 }
-                ]
-            },
-            {
                 npc: "👮 交通警察",
                 text: "「嗶嗶！超速了喔。」你收到一張國家級追焦照，罰單 $1,800 元。",
                 choices: [
                     { text: "乖乖繳罰單", sub: "金錢 -$1,800 / 精神 -15", cost: 1800, sanity: -15 },
-                    { text: "上網抱怨發洩", sub: "金錢 -$1,800 / 精神 -5", cost: 1800, sanity: -5 }
-                ]
-            },
-            {
-                npc: "🦷 牙醫診所",
-                text: "牙齒突然劇痛！牙醫說：「這要根管治療，加牙套要 20,000 喔。」",
-                choices: [
-                    { text: "痛到不行，花錢消災", sub: "金錢 -$20,000 / 精神 -15", cost: 20000, sanity: -15 },
-                    { text: "吃止痛藥撐著 (不建議)", sub: "精神 -30 / 風險極大", cost: 200, sanity: -30 }
+                    { text: "上網抱怨發洩", sub: "金錢 -$1,800 / 精神 -5 (罵完舒服點)", cost: 1800, sanity: -5 }
                 ]
             },
             {
                 npc: "🔑 房東阿姨",
                 text: "「少年仔，最近電費漲了，下個月房租要調漲 $1,000 喔。」",
                 choices: [
-                    { text: "含淚接受", sub: "月支出 +$1,000 / 精神 -10", action: 'monthly_sub', cost: 1000, sanity: -10 },
+                    { text: "含淚接受", sub: "月支出 +$1,000 / 精神 -10", action: 'rent_hike', cost: 1000, sanity: -10 },
                     { text: "我不租了！搬家！", sub: "搬家費 -$8,000 / 精神 -20", cost: 8000, sanity: -20 }
                 ]
             }
         ],
-        2: [ 
+        2: [
             {
                 npc: "🏋️ 健身房業務",
                 text: "「現在簽約一年，每個月只要 $1,200 喔！投資健康最划算！」",
@@ -376,7 +376,7 @@
                 ]
             },
             {
-                npc: "🎤 國際巨星演唱會",
+                npc: "🎤 演唱會搶票",
                 text: "你最愛的韓團要來台灣了！官網搶不到票，黃牛票一張炒到 8,000...",
                 choices: [
                     { text: "買黃牛！這輩子就看這一次", sub: "金錢 -$8,000 / 精神 +40", cost: 8000, sanity: 40 },
@@ -398,22 +398,6 @@
                     { text: "嚇死了，趕快賣掉止損！", sub: "實現虧損 / 精神 -20", action: 'panic_sell' },
                     { text: "關掉 APP，專注本業", sub: "精神 +5 / 越跌越買", action: 'hold' }
                 ]
-            },
-            {
-                npc: "🐱 孤獨感襲來",
-                text: "下班回到空蕩蕩的房間，好想養一隻貓陪伴...",
-                choices: [
-                    { text: "領養貓咪 (初期開銷)", sub: "金錢 -$5,000 / 精神 +30", cost: 5000, sanity: 30 },
-                    { text: "買個抱枕就好", sub: "金錢 -$500 / 精神 +5", cost: 500, sanity: 5 }
-                ]
-            },
-            {
-                npc: "🕵️ 神秘理財客",
-                text: "「00878 現在是相對低點，填息紀錄也很好。你要加碼嗎？」",
-                choices: [
-                    { text: "聽你的，加碼一張！", sub: "金錢 -目前股價 / 精神 +10", action: 'buy_one' },
-                    { text: "還是再觀望一下...", sub: "無變動", cost: 0, sanity: 0 }
-                ]
             }
         ],
         3: [
@@ -434,39 +418,15 @@
                 ]
             },
             {
-                npc: "💺 職業傷害",
-                text: "每天久坐腰痠背痛...是不是該買張好一點的人體工學椅？",
-                choices: [
-                    { text: "買 Herman Miller (二手)", sub: "金錢 -$12,000 / 精神 +15", cost: 12000, sanity: 15 },
-                    { text: "貼撒隆巴斯就好", sub: "金錢 -$200 / 精神 -5", cost: 200, sanity: -5 }
-                ]
-            },
-            {
                 npc: "🏠 老媽",
                 text: "「隔壁王阿姨的兒子買了按摩椅給她耶...家裡那台洗衣機好像也壞了...」",
                 choices: [
                     { text: "買新洗衣機給家裡", sub: "金錢 -$15,000 / 精神 +20", cost: 15000, sanity: 20 },
                     { text: "裝作沒聽到", sub: "金錢 -$0 / 精神 -15", cost: 0, sanity: -15 }
                 ]
-            },
-            {
-                npc: "🚗 大學同學",
-                text: "「欸我買特斯拉了！帥吧？你還在騎那台舊機車通勤喔？不熱嗎？」",
-                choices: [
-                    { text: "我也要買車！(被激怒)", sub: "頭期款 -$50,000 / 精神 +30", cost: 50000, sanity: 30 },
-                    { text: "笑笑帶過 (那是負債)", sub: "精神 -5 / 守住財富", cost: 0, sanity: -5 }
-                ]
-            },
-            {
-                npc: "💼 保險業務員",
-                text: "「這張儲蓄險保單利率很高，而且送行李箱喔！也是幫我做業績啦...」",
-                choices: [
-                    { text: "好啦買了 (人情)", sub: "金錢 -$30,000 / 資金卡死", cost: 30000, sanity: -10 },
-                    { text: "堅持拒絕", sub: "精神 -5 / 守住流動性", cost: 0, sanity: -5 }
-                ]
             }
         ],
-        4: [ 
+        4: [
              {
                 npc: "🕵️ 神秘理財客",
                 text: "「你的資產規模已經不一樣了。只要堅持下去，黎明就在眼前。」",
@@ -496,14 +456,21 @@
                 shares: 0, 
                 stockPrice: 15.00,
             };
-            this.init();
+            // 延遲啟動確保 DOM 載入
+            setTimeout(() => this.init(), 100);
         }
 
         init() {
+            this.updateUI();
             this.showModal("📖 序章：被困住的滾輪", 
                 "你是一名 30 歲的平凡上班族。\n薪水 35,000 元，扣掉房租生活費，每個月幾乎存不到錢。\n\n你看似安穩，其實正處於危險邊緣。\n目標：在 60 歲前，用這份死薪水，打造出能養活你的「現金流護盾」。");
-            this.updateUI();
-            this.nextMonth();
+            
+            // 強制綁定第一個月的邏輯到「繼續」按鈕
+            const btn = document.getElementById('modal-action-btn');
+            btn.onclick = () => {
+                this.closeModal();
+                this.nextMonth();
+            };
         }
 
         nextMonth() {
@@ -513,10 +480,12 @@
             this.state.cash += monthlySave;
             this.state.sanity -= 3; 
 
+            // 股價波動
             const change = (Math.random() * 0.1) - 0.04; 
             this.state.stockPrice *= (1 + change);
             if(this.state.stockPrice < 10) this.state.stockPrice = 10;
 
+            // 配息
             let dividend = 0;
             if ((this.state.month) % 3 === 0 && this.state.shares > 0) {
                 dividend = Math.floor(this.state.shares * this.state.stockPrice * 1000 * CONFIG.yield);
@@ -524,20 +493,224 @@
                 if(dividend > 0) this.showToast(`💰 領到股息：$${dividend.toLocaleString()}`);
             }
 
+            // 精神崩潰
             if (this.state.sanity < 30) {
                 if (Math.random() > 0.4) {
                     const lost = Math.floor(Math.random() * 5000) + 3000;
                     this.state.cash -= lost;
                     this.state.sanity = 60; 
                     this.showModal("💥 精神崩潰！", `壓力太大理智斷線！\n跑去吃燒肉又課金手遊，噴了 $${lost}。\n(精神值恢復，但錢包大失血)`);
+                    
+                    // 覆蓋按鈕行為，點擊後繼續檢查
+                    document.getElementById('modal-action-btn').onclick = () => {
+                        this.closeModal();
+                        this.checkProgress(dividend);
+                    };
+                    return; // 暫停後續生成，等待彈窗關閉
                 } else {
                     this.showToast("⚠️ 精神值瀕臨極限...");
                 }
             }
 
             this.checkProgress(dividend);
+        }
 
+        checkProgress(lastDividend) {
+            // 檢查是否破產
             if (this.state.cash < 0) {
-                 this.triggerGameOver();
+                this.triggerGameOver();
+                return;
+            }
+
+            // 關卡檢查
+            let levelUp = false;
+            let msgTitle = "";
+            let msgDesc = "";
+
+            if (this.state.level === 1 && this.state.cash >= 100000) {
+                this.state.level = 2;
+                levelUp = true;
+                msgTitle = "🎉 第一章通關";
+                msgDesc = "你存到了 10 萬預備金！\n現在開啟「投資面板」，開始種下資產的種子吧。";
+            } else if (this.state.level === 2 && this.state.shares >= 10) {
+                this.state.level = 3;
+                levelUp = true;
+                msgTitle = "🌱 第二章通關";
+                msgDesc = "你持有 10 張股票了！\n利用複利效應，讓資產像雪球一樣越滾越大吧！";
+            } else if (this.state.level === 3 && lastDividend >= 30000) {
+                this.state.level = 4;
+                levelUp = true;
+                msgTitle = "❄️ 第三章通關";
+                msgDesc = "你的股息已經足以支付房租！\n堅持最後一哩路，邁向完全的財富自由。";
+            } else if (this.state.level === 4) {
+                const passiveMonthly = (this.state.shares * this.state.stockPrice * 1000 * CONFIG.yield * 4) / 12;
+                if (passiveMonthly > this.state.expense) {
+                    this.triggerGoodEnding();
+                    return;
+                }
+            }
+
+            this.updateUI();
+
+            if (levelUp) {
+                this.showModal(msgTitle, msgDesc);
+                document.getElementById('modal-action-btn').onclick = () => {
+                    this.closeModal();
+                    this.generateEvent(); // 升級後繼續生成事件
+                };
             } else {
-                 this.generateEvent();
+                this.generateEvent();
+            }
+        }
+
+        generateEvent() {
+            let pool = LEVEL_EVENTS[this.state.level];
+            if(!pool) pool = LEVEL_EVENTS[4]; 
+            
+            const eventData = pool[Math.floor(Math.random() * pool.length)];
+
+            document.getElementById('npc-tag').innerText = eventData.npc;
+            document.getElementById('story-text').innerText = eventData.text;
+
+            const actionArea = document.getElementById('action-area');
+            actionArea.innerHTML = '';
+
+            eventData.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `${choice.text} <span>${choice.sub}</span>`;
+                btn.onclick = () => this.resolveEvent(choice);
+                actionArea.appendChild(btn);
+            });
+        }
+
+        resolveEvent(choice) {
+            // 處理選擇效果
+            if (choice.action === 'panic_sell') {
+                const returnCash = this.state.shares * this.state.stockPrice * 1000;
+                this.state.cash += returnCash;
+                this.state.shares = 0;
+                this.showToast("📉 你清空了所有持股...");
+            } else if (choice.action === 'promotion') {
+                 this.state.cash -= choice.cost;
+                 this.state.sanity += 10;
+                 CONFIG.salary += 3000; 
+                 this.showToast("🎉 投資自己成功！薪水增加了！");
+            } else if (choice.action === 'monthly_sub' || choice.action === 'rent_hike') {
+                 this.state.sanity += (choice.sanity || 0);
+                 this.state.expense += (choice.cost || 0);
+                 this.showToast(`💸 每月支出增加 $${choice.cost}`);
+            } else {
+                this.state.cash -= (choice.cost || 0);
+                this.state.sanity += (choice.sanity || 0);
+            }
+            
+            // 邊界檢查
+            this.state.sanity = Math.min(100, Math.max(0, this.state.sanity));
+            this.updateUI();
+            
+            // 顯示「進入下個月」按鈕
+            const actionArea = document.getElementById('action-area');
+            actionArea.innerHTML = '';
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn-next';
+            nextBtn.innerText = "📅 進入下個月";
+            nextBtn.onclick = () => this.nextMonth();
+            actionArea.appendChild(nextBtn);
+        }
+
+        trade(stock, qty) {
+            const cost = this.state.stockPrice * 1000;
+            if (qty > 0) { 
+                if (this.state.cash >= cost) {
+                    this.state.cash -= cost;
+                    this.state.shares++;
+                    this.showToast(`✅ 買入 1 張`);
+                } else {
+                    this.showToast("❌ 現金不足");
+                }
+            } else { 
+                if (this.state.shares > 0) {
+                    this.state.cash += cost;
+                    this.state.shares--;
+                    this.showToast(`✅ 賣出 1 張`);
+                } else {
+                    this.showToast("❌ 沒有庫存");
+                }
+            }
+            this.updateUI();
+        }
+
+        triggerGameOver() {
+            document.getElementById('modal-title').innerText = "💀 結局：破產墜落";
+            document.getElementById('modal-desc').innerText = "你的現金流徹底斷裂。\n為了生存，你被迫借了高利貸，陷入還債深淵。";
+            document.getElementById('modal-blog-btn').style.display = 'flex';
+            document.getElementById('modal').style.display = 'flex';
+            const btn = document.getElementById('modal-action-btn');
+            btn.innerText = "重新開始";
+            btn.onclick = () => location.reload();
+        }
+
+        triggerGoodEnding() {
+            document.getElementById('modal-title').innerText = "🏖️ 結局：財富自由";
+            document.getElementById('modal-desc').innerText = `你 45 歲了。股息收入超過了薪水。\n你遞出辭呈，不是因為憤怒，而是因為你「可以」。\n\n總資產：$${Math.floor(this.state.shares * this.state.stockPrice * 1000 + this.state.cash).toLocaleString()}`;
+            document.getElementById('modal-blog-btn').style.display = 'flex';
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('modal-action-btn').style.display = 'none'; 
+        }
+
+        updateUI() {
+            const levelNames = ["第一章：生存的縫隙", "第二章：種子的力量", "第三章：雪球的滾動", "第四章：自由的曙光"];
+            
+            document.getElementById('level-name').innerText = levelNames[this.state.level-1] || "最終章";
+            
+            // 修正這裡：確保 HTML 元素存在
+            const elYear = document.getElementById('game-year');
+            const elMonth = document.getElementById('game-month');
+            if(elYear) elYear.innerText = Math.floor(this.state.month / 12) + 1;
+            if(elMonth) elMonth.innerText = (this.state.month % 12) + 1;
+
+            document.getElementById('cash-display').innerText = `$${Math.floor(this.state.cash).toLocaleString()}`;
+            
+            const assetVal = this.state.shares * this.state.stockPrice * 1000;
+            document.getElementById('asset-display').innerText = `$${Math.floor(assetVal).toLocaleString()}`;
+            
+            document.getElementById('sanity-val').innerText = this.state.sanity;
+            const bar = document.getElementById('sanity-bar');
+            bar.style.width = `${this.state.sanity}%`;
+            if(this.state.sanity < 30) bar.style.background = '#e74c3c';
+            else if(this.state.sanity < 60) bar.style.background = '#f1c40f';
+            else bar.style.background = '#2ecc71';
+
+            document.getElementById('price-878').innerText = `$${this.state.stockPrice.toFixed(2)}`;
+            document.getElementById('cost-878').innerText = Math.floor(this.state.stockPrice * 1000).toLocaleString();
+            document.getElementById('qty-878').innerText = this.state.shares;
+
+            const bg = document.getElementById('main-bg');
+            bg.className = `main-stage bg-level${this.state.level}`;
+
+            document.getElementById('invest-panel').style.display = this.state.level >= 2 ? 'block' : 'none';
+        }
+
+        showModal(title, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.opacity = 1;
+            setTimeout(() => t.style.opacity = 0, 2000);
+        }
+
+        closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    }
+
+    // 啟動遊戲
+    const game = new Game();
+</script>
+</body>
+</html>
