@@ -38,7 +38,7 @@
         /* 遊戲標題區 */
         .game-title-section {
             text-align: center;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
         }
         .game-title-section h1 {
@@ -49,10 +49,29 @@
             letter-spacing: 2px;
         }
         .game-title-section p {
-            margin: 8px 0 0 0;
+            margin: 8px 0 12px 0;
             color: #bdc3c7;
             font-size: 1em;
             font-weight: normal;
+        }
+
+        /* 🆕 頂部部落格按鈕 (新加入) */
+        .top-blog-link {
+            display: inline-block;
+            color: var(--blog-color);
+            border: 1px solid var(--blog-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            background: rgba(0,0,0,0.2);
+        }
+        .top-blog-link:hover {
+            background-color: var(--blog-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(32, 191, 107, 0.3);
         }
 
         /* 頂部資訊欄 */
@@ -117,7 +136,7 @@
             background: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
-            min-height: 420px;
+            min-height: 450px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -204,10 +223,14 @@
 
 <div class="container">
     
-    <!-- 遊戲標題區 -->
+    <!-- 遊戲標題區 (含頂部導流) -->
     <div class="game-title-section">
         <h1>現金流戰記：上班族的逆襲</h1>
         <p>這不是遊戲，這是你的人生模擬器 💼</p>
+        <!-- 頂部按鈕 -->
+        <a href="https://vocus.cc/user/@WUCJ" target="_blank" class="top-blog-link">
+            👉 攻略與理財筆記：WUCJ
+        </a>
     </div>
 
     <!-- 頂部資訊欄 -->
@@ -281,9 +304,9 @@
         <div class="guide-title">💡 玩家生存指南 (Game Tips)</div>
         <ul class="tips-list">
             <li><b>精神值是關鍵：</b>不要當苦行僧！若<span class="highlight">精神 < 30</span> 會觸發「報復性消費」讓你破產。</li>
-            <li><b>紅色炸彈：</b>遊戲後期會有很多「人情債」，請務必保留緊急預備金。</li>
+            <li><b>紅色炸彈與旅遊：</b>出國旅遊很爽但很貴，請衡量口袋深度。</li>
             <li><b>複利的力量：</b>初期股息很少是正常的。堅持到 Level 3，你會發現股息增加的速度比加薪還快。</li>
-            <li><b>想學真的理財？</b>遊戲是簡化的，真實世界請看下方的理財筆記 👇</li>
+            <li><b>想學真的理財？</b>真實世界請看下方的理財筆記 👇</li>
         </ul>
     </div>
 
@@ -314,13 +337,13 @@
 
 <script>
     const CONFIG = {
-        salary: 35000, // 修改為 35k
-        baseExpense: 28000, // 基本開銷不變，生存壓力變大
+        salary: 35000, 
+        baseExpense: 28000, 
         inflation: 0.002,   
         yield: 0.015        
     };
 
-    // --- 事件庫 ---
+    // --- 超豐富事件庫 (含旅遊/演唱會) ---
     const LEVEL_EVENTS = {
         1: [ // Survival: 生存期
             {
@@ -332,11 +355,19 @@
                 ]
             },
             {
-                npc: "📱 購物廣告",
-                text: "滑手機時跳出廣告：『新款 iPhone 現貨供應』，你手上的舊機剛好當機了...",
+                npc: "🎧 3C 災難",
+                text: "你發現藍牙耳機少了一隻...找遍全身都沒有，心態崩了。",
                 choices: [
-                    { text: "分期付款買下去！", sub: "金錢 -$30,000 / 精神 +40", cost: 30000, sanity: 40 },
-                    { text: "重開機繼續用，還能戰", sub: "金錢 -$0 / 精神 -5", cost: 0, sanity: -5 }
+                    { text: "買新的 Airpods Pro", sub: "金錢 -$7,500 / 精神 +20 (爽)", cost: 7500, sanity: 20 },
+                    { text: "改用路邊攤有線耳機", sub: "金錢 -$300 / 精神 -10 (委屈)", cost: 300, sanity: -10 }
+                ]
+            },
+            {
+                npc: "👮 交通警察",
+                text: "「嗶嗶！超速了喔。」你收到一張國家級追焦照，罰單 $1,800 元。",
+                choices: [
+                    { text: "乖乖繳罰單", sub: "金錢 -$1,800 / 精神 -15", cost: 1800, sanity: -15 },
+                    { text: "上網抱怨發洩", sub: "金錢 -$1,800 / 精神 -5 (罵完舒服點)", cost: 1800, sanity: -5 }
                 ]
             },
             {
@@ -348,15 +379,31 @@
                 ]
             },
             {
-                npc: "📩 紅色炸彈",
-                text: "大學死黨要結婚了，要在五星級飯店宴客...",
+                npc: "🔑 房東阿姨",
+                text: "「少年仔，最近電費漲了，下個月房租要調漲 $1,000 喔。」",
                 choices: [
-                    { text: "包 3600 去吃大餐", sub: "金錢 -$3,600 / 精神 +10", cost: 3600, sanity: 10 },
-                    { text: "包 1200 說有事不到", sub: "金錢 -$1,200 / 精神 -5", cost: 1200, sanity: -5 }
+                    { text: "含淚接受", sub: "每月支出增加 / 精神 -10", action: 'rent_hike', sanity: -10 },
+                    { text: "我不租了！搬家！", sub: "搬家費 -$8,000 / 精神 -20", cost: 8000, sanity: -20 }
                 ]
             }
         ],
         2: [ // First Seed: 種子期
+            {
+                npc: "🎤 國際巨星演唱會",
+                text: "你最愛的韓團要來台灣了！官網搶不到票，黃牛票一張炒到 8,000...",
+                choices: [
+                    { text: "買黃牛！這輩子就看這一次", sub: "金錢 -$8,000 / 精神 +40", cost: 8000, sanity: 40 },
+                    { text: "算了，看 YouTube 回放", sub: "金錢 -$0 / 精神 -15 (遺憾)", cost: 0, sanity: -15 }
+                ]
+            },
+            {
+                npc: "🚄 國內小旅行",
+                text: "連假到了，朋友揪去台南三天兩夜爆吃之旅。",
+                choices: [
+                    { text: "走啊！牛肉湯我來了", sub: "金錢 -$5,000 / 精神 +20", cost: 5000, sanity: 20 },
+                    { text: "在家睡覺省錢", sub: "金錢 -$0 / 精神 +5", cost: 0, sanity: 5 }
+                ]
+            },
             {
                 npc: "📉 財經新聞",
                 text: "『外資大逃殺！台股重挫 300 點！』你看著剛買的 ETF 帳面變綠色...",
@@ -366,19 +413,11 @@
                 ]
             },
             {
-                npc: "🛵 外送平台",
-                text: "週末要不要去跑外送賺點外快？可能會很累喔。",
+                npc: "🐱 孤獨感襲來",
+                text: "下班回到空蕩蕩的房間，好想養一隻貓陪伴...",
                 choices: [
-                    { text: "拼了！賺錢重要", sub: "金錢 +$2,000 / 精神 -15", cost: -2000, sanity: -15 },
-                    { text: "在家睡覺補眠", sub: "精神 +10", cost: 0, sanity: 10 }
-                ]
-            },
-            {
-                npc: "📱 陌生簡訊",
-                text: "『飆股群組免費加，老師帶你飛！保證獲利 20%！』看起來好像很賺？",
-                choices: [
-                    { text: "加入看看 (貪婪)", sub: "金錢 -$5,000 / 被詐騙", cost: 5000, sanity: -20 },
-                    { text: "封鎖刪除 (理智)", sub: "守住錢包 / 精神 +5", cost: 0, sanity: 5 }
+                    { text: "領養貓咪 (初期開銷)", sub: "金錢 -$5,000 / 精神 +30 (心靈寄託)", cost: 5000, sanity: 30 },
+                    { text: "買個抱枕就好", sub: "金錢 -$500 / 精神 +5", cost: 500, sanity: 5 }
                 ]
             },
             {
@@ -392,11 +431,27 @@
         ],
         3: [ // Compounding: 雪球期
             {
+                npc: "✈️ 日本旅遊誘惑",
+                text: "滑 IG 看到大家都在日本滑雪、吃和牛。你已經三年沒出國了...",
+                choices: [
+                    { text: "刷卡！東京五天四夜", sub: "金錢 -$35,000 / 精神 +60 (復活)", cost: 35000, sanity: 60 },
+                    { text: "去吃壽司郎解饞", sub: "金錢 -$800 / 精神 -5 (羨慕)", cost: 800, sanity: -5 }
+                ]
+            },
+            {
                 npc: "👨‍💼 老闆",
                 text: "「最近公司要升遷了，你要不要去報名那個 3 萬元的在職進修課程？」",
                 choices: [
                     { text: "投資自己！報名！", sub: "金錢 -$30,000 / 薪水可能增加", cost: 30000, action: 'promotion' },
                     { text: "算了，省錢重要", sub: "錯失機會", cost: 0, sanity: 0 }
+                ]
+            },
+            {
+                npc: "💺 職業傷害",
+                text: "每天久坐腰痠背痛...是不是該買張好一點的人體工學椅？",
+                choices: [
+                    { text: "買 Herman Miller (二手)", sub: "金錢 -$12,000 / 精神 +15 (舒服)", cost: 12000, sanity: 15 },
+                    { text: "貼撒隆巴斯就好", sub: "金錢 -$200 / 精神 -5", cost: 200, sanity: -5 }
                 ]
             },
             {
@@ -408,11 +463,11 @@
                 ]
             },
             {
-                npc: "🏥 健檢報告",
-                text: "健檢報告出來了，滿江紅...醫生建議你買昂貴的保健食品調理。",
+                npc: "💼 保險業務員",
+                text: "「這張儲蓄險保單利率很高，而且送行李箱喔！也是幫我做業績啦...」",
                 choices: [
-                    { text: "買！健康無價", sub: "金錢 -$5,000 / 精神 +10", cost: 5000, sanity: 10 },
-                    { text: "多喝水多運動就好", sub: "風險自負 / 精神 -5", cost: 0, sanity: -5 }
+                    { text: "好啦買了 (人情)", sub: "金錢 -$30,000 / 資金卡死", cost: 30000, sanity: -10 },
+                    { text: "堅持拒絕", sub: "精神 -5 / 守住流動性", cost: 0, sanity: -5 }
                 ]
             }
         ],
@@ -563,6 +618,10 @@
                  this.state.sanity += 10;
                  CONFIG.salary += 3000; 
                  this.showToast("🎉 投資自己成功！薪水增加了！");
+            } else if (choice.action === 'rent_hike') {
+                 this.state.sanity += choice.sanity;
+                 this.state.expense += 1000; 
+                 this.showToast("💸 房租每月調漲 $1,000");
             } else {
                 this.state.cash -= (choice.cost || 0);
                 this.state.sanity += (choice.sanity || 0);
